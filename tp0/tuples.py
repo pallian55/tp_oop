@@ -13,18 +13,4 @@ def afficher_releve(releve):
 
 assert afficher_releve(releve1) == "Capteur laser_avant : 2.35 m"
 
-def recalibrer(liste_releve, capteur, valeur):
-    """reconstruit la liste des relevés avec la nouvelle valeur pour le capteur concerné"""
-    new_liste = []
-    for i in liste_releve :
-        if i[0] == capteur :
-            new_tuple = (capteur,valeur,i[2])
-            new_liste.append(new_tuple)
-        else :
-            new_liste.append(i)
-    return new_liste
 
-nouveaux_releves = recalibrer(releves, "laser_avant", 2.40)
-assert nouveaux_releves[0] == ("laser_avant", 2.40, "m")
-assert nouveaux_releves[1] == releve2
-assert nouveaux_releves[2] == releve3

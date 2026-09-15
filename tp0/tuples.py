@@ -12,5 +12,3 @@ def afficher_releve(releve):
 
 
 assert afficher_releve(releve1) == "Capteur laser_avant : 2.35 m"
-
-

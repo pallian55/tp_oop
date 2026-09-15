@@ -83,5 +83,45 @@ class TestFlottesRobots(unittest.TestCase):
 		ajout = ajouter_robot_mission(robots_exploration, "R7")
 		assert robots_exploration == {"R2", "R5", "R7"}
 
+pieces_stock = {
+"ModeleA": {"moteurs": 10, "capteurs": 25, "roues": 40},
+"ModeleB": {"moteurs": 6, "capteurs": 15, "roues": 24},
+}
+
+def consommer_piece(stock, modele, piece, nombre) :
+    """retire des pièces du stock aprés une réparation"""
+    if nombre >= 0 :
+        stock[modele][piece] -= nombre
+        if stock[modele][piece]<0 :
+            stock[modele][piece] = 0
+
+def total_pieces(stock) :
+    """calcule le nombre total de pièces"""
+    ret = {"moteurs" : 0, "capteurs" : 0, "roues" : 0}
+    for dico in stock.values() :
+        for clef, valeur in dico.items() :
+            ret[clef] += valeur
+    return ret
+
+class TestInventaire(unittest.TestCase) :
+	"""Tests pour les fonctions sur les dictionnaires"""
+
+	def test_consommer_piece(self) :
+		consommer_piece(pieces_stock, "ModeleA", "moteurs", 3)
+		assert pieces_stock["ModeleA"]["moteurs"] == 7
+
+	def test_consommer_piece_trop_nombreuses(self) :
+		consommer_piece(pieces_stock, "ModeleA", "moteurs", 8)
+		assert pieces_stock["ModeleA"]["moteurs"] == 0
+
+	def test_total_pieces(self) :
+		totaux = total_pieces(pieces_stock)
+		assert totaux == {"moteurs": 6, "capteurs": 40, "roues": 64}
+
+	def test_total_pieces_vides(self) :
+		stock_vide = {"ModeleA" : {"moteurs" : 0, "capteurs" : 0, "roues" : 0}, "ModeleB" : {"moteurs" : 0, "capteurs" : 0, "roues" : 0}}
+		total = total_pieces(stock_vide)
+		assert total == {"moteurs" : 0, "capteurs" : 0, "roues" : 0}	
+
 if __name__ == "__main__":
 	unittest.main(verbosity=2)

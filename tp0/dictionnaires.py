@@ -12,7 +12,10 @@ assert quantite_piece(pieces_stock, "ModeleA", "moteurs") == 10
 
 def consommer_piece(stock, modele, piece, nombre) :
     """retire des pièces du stock aprés une réparation"""
-    stock[modele][piece] -= nombre
+    if nombre >= 0 :
+		stock[modele][piece] -= nombre
+		if stock[modele][piece]<0 :
+			stock[modele][piece] = 0
 
 def ajouter_modele(stock, modele, nb_moteurs, nb_capteurs, nb_roues) :
     """enregistre un nouveau modèle de robot avec son stock initial"""

@@ -1,0 +1,21 @@
+2 : Oui, la fonction est bien écrite pour le besoin attendu. Ce qu’elle fait : parcourt chaque relevé de la liste ;
+si le nom du capteur correspond à celui recherché, elle construit un nouveau tuple avec :
+
+le même nom de capteur,
+la nouvelle valeur,
+la même unité.
+sinon, elle laisse le tuple inchangé ; renvoie une nouvelle liste, sans modifier la liste d’origine.
+Donc le comportement attendu est bien celui-ci :
+
+si le capteur existe, il est recalibré ;
+si le capteur n’existe pas, la liste reste identique.
+
+Seule hypothèse : elle suppose que chaque relevé est toujours un tuple de la forme (nom_capteur, valeur, unité). 
+C’est cohérent avec le code et les tests. Donc, du point de vue de la logique demandée, elle est correcte.
+
+3 : Le test passe mais il ne couvre pas un cas que je n'avais pas prévu
+
+5 : Le commit me semble même plus précis qu'un message que j'aurais écrit moi même
+
+6 : Pour moi l'usage le plus fiable et le plus pratique me semble être la rédaction du READMDE.md, en effet c'est un tâche qui est d'ordinaire
+fastidieuse et où l'humain peut faire facilement des erreurs alors qu'avec l'ia j'ai eu un document rédigé sasn erreurs et rapidement.

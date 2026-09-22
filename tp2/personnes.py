@@ -75,4 +75,3 @@ class Habitant ( ABC ) :
         """Methode abstraite qui calcule le nombre d'année avant la retraite si c'est un adulte et 
         renvoie une erreur si c'est un enfant"""
         pass
-

@@ -11,6 +11,10 @@ class Habitant ( ABC ) :
         self.__age = age
         self.__adresse = adresse
 
+    def __str__(self):
+        """Permet d'imprimer les infos sur un habitant"""
+        return self.__prenom + " " + self.__nom + ", " + str(self.__age) + " ans, habite a " + self.__adresse
+
     def get_nom(self):
         """"Retourne le nom de l'habitant"""
         return self.__nom
@@ -104,3 +108,4 @@ try:
     assert False, "une ValueError aurait du etre levee"
 except ValueError:
     pass
+print(adulte)

@@ -2,6 +2,7 @@
 import unittest
 
 from habitant_decorateur import Habitant
+from personnes import Adulte, Enfant
 from village import Village
 
 class TestHabitant(unittest.TestCase):
@@ -59,6 +60,27 @@ class TestVillage(unittest.TestCase):
         self.assertIn(habitant, second_village.get_habitants())
         self.assertIs(premier_village.get_habitants()[0], habitant)
         self.assertIs(second_village.get_habitants()[0], habitant)
+
+
+class TestHeritage(unittest.TestCase):
+    """Tests du polymorphisme entre les adultes et les enfants."""
+
+    def test_retraite_adulte(self):
+        """Verifie le nombre d'annees avant la retraite d'un adulte."""
+        adulte = Adulte("Dupont", "Marie", 35, "Rue A")
+
+        self.assertEqual(adulte.calcul_nombre_annee_avant_retraite(), 27)
+
+    def test_retraite_enfant(self):
+        """Verifie qu'un enfant ne peut pas calculer sa retraite."""
+        enfant = Enfant("Martin", "Lucas", 12, "Rue B")
+
+        self.assertIn("enfant", enfant.calcul_nombre_annee_avant_retraite())
+
+    def test_creation_enfant_trop_age(self):
+        """Verifie qu'un enfant de 20 ans leve une ValueError."""
+        with self.assertRaises(ValueError):
+            Enfant("Oups", "Prenom", 20, "Rue C")
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

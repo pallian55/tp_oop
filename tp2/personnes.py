@@ -5,15 +5,19 @@ from multipledispatch import dispatch
 
 class Habitant ( ABC ) :
     """Classe représentant un habitant du village"""
-    def __init__(self, nom, age, adresse, animaux = None):
+    def __init__(self, nom, prenom, age, adresse):
         self.__nom = nom
+        self.__prenom = prenom
         self.__age = age
         self.__adresse = adresse
-        self.__animaux = animaux
 
     def get_nom(self):
         """"Retourne le nom de l'habitant"""
         return self.__nom
+
+    def get_prenom(self):
+        """Retourne le prenom de l'habitant"""
+        return self.__prenom
 
     @property
     def age(self):
@@ -32,21 +36,17 @@ class Habitant ( ABC ) :
         """Retourne l'adresse de l'habitant"""
         return self.__adresse
 
-    def get_animaux(self):
-        """Retourne le dictionnaire des animaux de l'habitant"""
-        return self.__animaux
-
     def set_nom(self, nom):
         """Modifie le nom de l'habitant"""
         self.__nom = nom
 
+    def set_prenom(self, prenom):
+        """Modifie le prenom de l'habitant"""
+        self.__prenom = prenom
+
     def set_adresse(self, adresse):
         """Modifie l'dresse de l'habitant"""
         self.__adresse = adresse
-
-    def set_animaux(self, animaux):
-        """Modifie le dictionnaire des animaux de l'habitant"""
-        self.__animaux = animaux
 
     @dispatch(str)
     def set_info(self, nom):
@@ -63,15 +63,44 @@ class Habitant ( ABC ) :
         """Affiche le nom et l'adresse de l'habitant"""
         print(self.get_nom() + " habite a " + self.get_adresse())
 
-    def compte_animal(self, animal):
-        """Retourne le nombre d'animaux de type animal que posséde l'habitant"""
-        if animal in self.get_animaux():
-            return self.get_animaux()[animal]
-        else :
-            return 0
-
     @abstractmethod
     def calcul_nombre_annee_avant_retraite(self):
         """Methode abstraite qui calcule le nombre d'année avant la retraite si c'est un adulte et 
         renvoie une erreur si c'est un enfant"""
         pass
+
+class Adulte(Habitant):
+    """classe héritant d'habitant qui représente un adulte"""
+    def __init__(self, nom, prenom, age, adresse):
+        if age < 18:
+            raise ValueError("Un adulte doit avoir au moins 18 ans")
+        else:
+            super().__init__(nom, prenom, age, adresse)
+
+    def calcul_nombre_annee_avant_retraite(self):
+        if self.age >= 62:
+            return "Deja a la retraite"
+        else:
+            return 62 - self.age
+
+class Enfant(Habitant):
+    """Classe eritant d'Habitant representant un enfant"""
+    def __init__(self, nom, prenom, age, adresse):
+        if age >=18:
+            raise ValueError("Un enfant doit avoir moins de 18 ans")
+        else:
+            super().__init__(nom, prenom, age, adresse)
+
+    def calcul_nombre_annee_avant_retraite(self):
+        return "Erreur: un enfant ne peut pas calculer sa retraite"
+
+adulte = Adulte("Dupont", "Marie", 35, "Rue A")
+enfant = Enfant("Martin", "Lucas", 12, "Rue B")
+assert isinstance(adulte, Habitant)
+assert adulte.calcul_nombre_annee_avant_retraite() == 27
+assert "enfant" in enfant.calcul_nombre_annee_avant_retraite()
+try:
+    Enfant("Oups", "prenom", 25, "Rue C")
+    assert False, "une ValueError aurait du etre levee"
+except ValueError:
+    pass

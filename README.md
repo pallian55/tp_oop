@@ -1,3 +1,5 @@
+Lilian Hannequin
+
 # TP OOP
 
 Ce dépôt contient les exercices du TP d'introduction à la programmation

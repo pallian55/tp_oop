@@ -98,6 +98,10 @@ class Enfant(Habitant):
     def calcul_nombre_annee_avant_retraite(self):
         return "Erreur: un enfant ne peut pas calculer sa retraite"
 
+def affichage(h : Habitant):
+    """Imprime un habitant peu importe son type"""
+    print(str(h))
+
 adulte = Adulte("Dupont", "Marie", 35, "Rue A")
 enfant = Enfant("Martin", "Lucas", 12, "Rue B")
 assert isinstance(adulte, Habitant)
@@ -109,3 +113,5 @@ try:
 except ValueError:
     pass
 print(adulte)
+affichage(adulte)
+affichage(enfant)
